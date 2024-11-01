@@ -13,14 +13,19 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories
 public class DatabaseConfig {
+    private final EnvironmentConfig environmentConfig;
+
+    public DatabaseConfig(EnvironmentConfig environmentConfig) {
+        this.environmentConfig = environmentConfig;
+    }
 
     @Bean
     public DataSource dataSource() {
         return DataSourceBuilder.create()
-                .url()
-                .username()
-                .password()
-                .driverClassName()
-                .build()
+                .url(environmentConfig.getDbUrl() + environmentConfig.getDbName())
+                .username(environmentConfig.getDbUser())
+                .password(environmentConfig.getDbPassword())
+                .driverClassName("org.postgresql.Driver")
+                .build();
     }
 }

@@ -11,6 +11,8 @@ public class EnvironmentConfig {
         this.dotenv = Dotenv.load();
     }
 
+    public String getDbUrl() { return dotenv.get("DB_URL"); }
+
     public String getDbName() {
         return dotenv.get("DB_NAME");
     }
