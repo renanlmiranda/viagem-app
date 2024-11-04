@@ -21,7 +21,8 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        return DataSourceBuilder.create()
+
+       return DataSourceBuilder.create()
                 .url(environmentConfig.getDbUrl() + environmentConfig.getDbName())
                 .username(environmentConfig.getDbUser())
                 .password(environmentConfig.getDbPassword())

@@ -12,7 +12,7 @@ public class ViagemAppApplication {
 		ApplicationContext context = SpringApplication.run(ViagemAppApplication.class, args);
 
 		EnvironmentConfig envConfig = context.getBean(EnvironmentConfig.class);
-		System.out.println("Database name: " + envConfig.getDbName());
+		System.out.println("Database connected: " + envConfig.getDbName());
 	}
 
 }

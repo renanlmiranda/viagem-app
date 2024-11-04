@@ -8,7 +8,7 @@ public class EnvironmentConfig {
     private final Dotenv dotenv;
 
     public EnvironmentConfig() {
-        this.dotenv = Dotenv.load();
+        dotenv = Dotenv.configure().load();
     }
 
     public String getDbUrl() { return dotenv.get("DB_URL"); }
