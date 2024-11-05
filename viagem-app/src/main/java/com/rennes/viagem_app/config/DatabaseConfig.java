@@ -1,6 +1,6 @@
 package com.rennes.viagem_app.config;
 
-
+import org.flywaydb.core.Flyway;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +21,19 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-
-       return DataSourceBuilder.create()
+        return DataSourceBuilder.create()
                 .url(environmentConfig.getDbUrl() + environmentConfig.getDbName())
                 .username(environmentConfig.getDbUser())
                 .password(environmentConfig.getDbPassword())
                 .driverClassName("org.postgresql.Driver")
                 .build();
     }
+
+    /*@Bean
+    public Flyway flyway(DataSource dataSource) {
+        return Flyway.configure()
+                .dataSource(dataSource)
+                .locations("classpath:db/migration")
+                .load();
+    }*/
 }

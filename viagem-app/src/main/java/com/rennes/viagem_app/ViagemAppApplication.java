@@ -9,10 +9,14 @@ import org.springframework.context.ApplicationContext;
 public class ViagemAppApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(ViagemAppApplication.class, args);
-
-		EnvironmentConfig envConfig = context.getBean(EnvironmentConfig.class);
-		System.out.println("Database connected: " + envConfig.getDbName());
+		try {
+			ApplicationContext context = SpringApplication.run(ViagemAppApplication.class, args);
+			EnvironmentConfig envConfig = context.getBean(EnvironmentConfig.class);
+			System.out.println("Database connected: " + envConfig.getDbName());
+		} catch (Exception e) {
+			System.err.println("Error starting application: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }
