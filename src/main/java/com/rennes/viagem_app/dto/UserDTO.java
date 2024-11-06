@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class UserDTO {
-    @Setter(AccessLevel.NONE)
+    @Setter
     @Getter
     private long id;
 

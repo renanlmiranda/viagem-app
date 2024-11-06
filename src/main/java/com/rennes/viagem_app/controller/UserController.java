@@ -19,17 +19,21 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity<UserDomain> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         try {
-            UserDomain createdUser = userService.createUser(userDTO);
+            UserDTO createdUser = userService.createUser(userDTO);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
 
-    @GetMapping
-    public String helloWorld(){
-        return "Hello World";
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id){
+        UserDTO user = userService.findUser(id);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.FOUND);
     }
 }
