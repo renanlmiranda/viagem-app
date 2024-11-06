@@ -1,18 +1,19 @@
 package com.rennes.viagem_app;
 
-import com.rennes.viagem_app.config.EnvironmentConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories("com.rennes.viagem_app.repository")
+@EnableConfigurationProperties
 public class ViagemAppApplication {
 
 	public static void main(String[] args) {
 		try {
 			ApplicationContext context = SpringApplication.run(ViagemAppApplication.class, args);
-			EnvironmentConfig envConfig = context.getBean(EnvironmentConfig.class);
-			System.out.println("Database connected: " + envConfig.getDbName());
 		} catch (Exception e) {
 			System.err.println("Error starting application: " + e.getMessage());
 			e.printStackTrace();
