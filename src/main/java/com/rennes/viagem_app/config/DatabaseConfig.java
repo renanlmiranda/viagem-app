@@ -28,7 +28,6 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
 
-        System.out.println(username);
         DataSource dataSource = DataSourceBuilder.create()
                 .url(url)
                 .username(username)

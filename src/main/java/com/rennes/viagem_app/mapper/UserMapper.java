@@ -49,4 +49,13 @@ public class UserMapper {
 
         return userDomain;
     }
+
+    public UserDTO domainToDTO(UserDomain userDomain) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userDomain.getId());
+        userDTO.setEmail(userDomain.getEmail());
+        userDTO.setName(userDomain.getName());
+
+        return userDTO;
+    }
 }

@@ -1,6 +1,7 @@
 package com.rennes.viagem_app.service;
 
 import com.rennes.viagem_app.domain.UserDomain;
+import com.rennes.viagem_app.dto.LoginDTO;
 import com.rennes.viagem_app.dto.UserDTO;
 import com.rennes.viagem_app.entity.UserEntity;
 import com.rennes.viagem_app.mapper.UserMapper;
@@ -8,6 +9,8 @@ import com.rennes.viagem_app.repository.IUserRepository;
 import com.rennes.viagem_app.security.EncryptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,25 +25,26 @@ public class UserService {
         this.encryptionHandler = encryptionHandler;
     }
 
-    public UserDTO createUser(UserDTO userDTO) {
+    public void createUser(UserDTO userDTO) {
         UserDomain userDomain = userMapper.dtoToDomain(userDTO);
 
         String encryptedPassword = encryptionHandler.encrypt(userDomain.getPassword());
-        UserEntity userEntity = userMapper.domainToEntity(userDomain);
-        userEntity.setPassword(encryptedPassword);
+        userDomain.setPassword(encryptedPassword);
 
-        UserEntity savedEntity = userRepository.save(userEntity);
-        return userMapper.entityToDTO(savedEntity);
+        userRepository.save(userDomain);
     }
 
-    public UserDTO findUser(Long id) {
-        UserEntity userEntity = userRepository.findById(id).orElse(null);
+    public Optional<UserDTO> findUser(Long id) {
+        Optional<UserDomain> user = userRepository.findById(id);
+        return user.map(userMapper::domainToDTO);
+    }
 
-        if (userEntity == null) {
-            return null;
-        };
+    public String login(LoginDTO loginDTO) {
+        UserDomain userDomain = userRepository.findByEmail(loginDTO.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + loginDTO.getEmail()));
 
-        return userMapper.entityToDTO(userEntity);
+        boolean isValidPass = encryptionHandler.compare(loginDTO.getPassword(), userDomain.getPassword());
+        return "teste";
     }
 
 

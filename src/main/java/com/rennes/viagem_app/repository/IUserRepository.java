@@ -1,9 +1,11 @@
 package com.rennes.viagem_app.repository;
 
+import com.rennes.viagem_app.domain.UserDomain;
 import com.rennes.viagem_app.entity.UserEntity;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-@Repository
 public interface IUserRepository extends IBaseRepository<UserEntity, Long> {
-
+    Optional<UserDomain> findByEmail(String email);
+    Optional<UserDomain> findById(Long id);
+    void save(UserDomain userDomain);
 }
